@@ -1,0 +1,33 @@
+@theme {
+  /* Neutral */
+  --color-neutral-900: #02012c;
+  --color-neutral-800: #262540;
+  --color-neutral-700: #302f4a;
+  --color-neutral-600: #3c3b5e;
+  --color-neutral-300: #acacb7;
+  --color-neutral-200: #d4d3d9;
+  --color-neutral-0: #ffffff;
+
+  /* Orange */
+  --color-orange-500: #ff820a;
+
+  /* Blue */
+  --color-blue-500: #4658d9;
+  --color-blue-700: #2b1b9c;
+
+  /* Spacing */
+  --spacing-025: 2px;
+  --spacing-050: 4px;
+  --spacing-075: 6px;
+  --spacing-100: 8px;
+  --spacing-125: 10px;
+  --spacing-150: 12px;
+  --spacing-200: 16px;
+  --spacing-250: 20px;
+  --spacing-300: 24px;
+  --spacing-400: 32px;
+  --spacing-500: 40px;
+  --spacing-600: 48px;
+  --spacing-800: 64px;
+  --spacing-1000: 80px;
+}
