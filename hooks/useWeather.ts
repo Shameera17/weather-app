@@ -2,6 +2,7 @@
 
 import { fetcher } from "@/lib/fetcher";
 import { getWeatherUrl } from "@/lib/weather";
+import { WeatherResponse } from "@/types/weather";
 import useSWR from "swr";
 
 export function useWeather(
@@ -11,7 +12,7 @@ export function useWeather(
 ) {
   const key = lat && lon ? getWeatherUrl(lat, lon, unit) : null;
 
-  const { data, error, isLoading } = useSWR(key, fetcher);
+  const { data, error, isLoading } = useSWR<WeatherResponse>(key, fetcher);
 
   return {
     weather: data,
