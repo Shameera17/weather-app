@@ -1,5 +1,7 @@
+import Icon from "@/components/ui/icon";
 import Typography from "@/components/ui/typography";
 import WeatherCard from "@/components/weather/weather-card";
+import { images } from "@/lib/assets";
 import Image from "next/image";
 
 export default function Home() {
@@ -7,6 +9,7 @@ export default function Home() {
     <div className="flex min-h-screen items-center justify-center  font-sans ">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16   sm:items-start">
         <WeatherCard />
+        <Icon src={images.logo} size={{ width: 180, height: 40 }} />
         <Typography variant="hero">
           The quick brown fox jumps over the lazy dog
         </Typography>
