@@ -1,3 +1,4 @@
+import Typography from "@/components/ui/typography";
 import WeatherCard from "@/components/weather/weather-card";
 import Image from "next/image";
 
@@ -6,6 +7,13 @@ export default function Home() {
     <div className="flex min-h-screen items-center justify-center  font-sans ">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16   sm:items-start">
         <WeatherCard />
+        <Typography variant="hero">
+          The quick brown fox jumps over the lazy dog
+        </Typography>
+
+        <Typography variant="body">
+          The quick brown fox jumps over the lazy dog
+        </Typography>
         <Image
           className="dark:invert"
           src="/next.svg"
