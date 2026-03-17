@@ -1,0 +1,12 @@
+{
+  "css.lint.unknownAtRules": "ignore",
+  "chat.mcp.serverSampling": {
+    "weather-app/.vscode/mcp.json: shadcn": {
+      "allowedModels": [
+        "copilot/auto",
+        "copilotcli/claude-sonnet-4.6",
+        "copilotcli/claude-sonnet-4.5"
+      ]
+    }
+  }
+}
