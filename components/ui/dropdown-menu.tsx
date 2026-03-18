@@ -66,7 +66,8 @@ const DropdownMenuContent = React.forwardRef<
       sideOffset={sideOffset}
       className={cn(
         "z-50 max-h-(--radix-dropdown-menu-content-available-height) w-49.5 overflow-y-auto overflow-x-hidden",
-        "bg-neutral-800 rounded-8 p-100",
+        "bg-neutral-800 border border-neutral-600 rounded-8 p-100",
+        "[box-shadow:var(--shadow-200)]",
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-dropdown-menu-content-transform-origin]",
         className,
       )}
@@ -87,7 +88,7 @@ const DropdownMenuItem = React.forwardRef<
     className={cn(
       "relative flex cursor-default select-none items-center gap-125",
       "bg-transparent text-neutral-0 text-md-medium",
-      "rounded-8 px-100 py-125",
+      "rounded-8 px-150 py-125",
       "outline-none transition-colors",
       "hover:bg-neutral-700 hover:text-neutral-0",
       "focus:bg-neutral-700 focus:text-neutral-0",
@@ -156,9 +157,9 @@ const DropdownMenuLabel = React.forwardRef<
   <DropdownMenuPrimitive.Label
     ref={ref}
     className={cn(
-      "text-neutral-300 text-xs-medium",
-      "px-100 pt-200 pb-100",
-      "mt-100",
+      "text-neutral-400 text-sm",
+      "px-150 pt-150 pb-100",
+      "tracking-wide",
       inset && "pl-8",
       className,
     )}
