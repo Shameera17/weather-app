@@ -34,8 +34,10 @@ export const HomePage = () => {
     <>
       {/* Section 1 : navigation */}
       <section>
-        <Icon src={images.logo} size={{ width: 180, height: 40 }} />
-        <MetricSelection setUnit={setUnit} unit={unit} />
+        <nav className="flex justify-between w-full">
+          <Icon src={images.logo} size={{ width: 180, height: 40 }} />
+          <MetricSelection setUnit={setUnit} unit={unit} />
+        </nav>
       </section>
       {/* Section 2 : Hero */}
       <section>
