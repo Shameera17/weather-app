@@ -10,6 +10,7 @@ export interface Metric {
   type: "metric" | "imperial"; // 'metric' for Celsius, 'imperial' for Fahrenheit
   windSpeedUnit: "km/h" | "mph"; // 'km/h' for kilometers per hour, 'mph' for miles per hour
   precipitationUnit: "mm" | "in"; // 'mm' for millimeters, 'in' for inches
+  temperatureUnit: "c" | "f"; // 'c' for Celsius, 'f' for Fahrenheit
 }
 export const HomePage = () => {
   const { coords, loading, error } = useGeolocation();
@@ -17,6 +18,7 @@ export const HomePage = () => {
     type: "metric",
     windSpeedUnit: "km/h",
     precipitationUnit: "mm",
+    temperatureUnit: "c",
   });
   const { weather, isLoading, isError } = useWeather(
     coords?.latitude,
