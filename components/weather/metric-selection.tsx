@@ -80,7 +80,9 @@ export const MetricSelection = ({ setUnit, unit }: MetricSelectionProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="dropdown" size="dropdown">
+          Open
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
         <DropdownMenuGroup>
