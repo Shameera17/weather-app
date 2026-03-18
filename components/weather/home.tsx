@@ -4,6 +4,7 @@ import { useWeather } from "@/hooks/useWeather";
 import { images } from "@/lib/assets";
 import { useState } from "react";
 import Icon from "../ui/icon";
+import { SearchBar } from "../ui/search-bar";
 import Typography from "../ui/typography";
 import { MetricSelection } from "./metric-selection";
 export interface Metric {
@@ -48,6 +49,9 @@ export const HomePage = () => {
         </Typography>
       </section>
       {/* Section 3 : Search */}
+      <section>
+        <SearchBar />
+      </section>
       {/* Section 4 : Weather Cards */}
       {/* Section 4.1 : Left */}
       {/* Section 4.2 : Right */}

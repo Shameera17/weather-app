@@ -16,8 +16,9 @@
   --color-orange-500: #ff820a;
 
   /* Blue */
-  --color-blue-500: #4658d9;
   --color-blue-700: #2b1b9c;
+  --color-blue-600: #3845b8;
+  --color-blue-500: #4658d9;
 
   /* Spacing */
   --spacing-025: 2px;
