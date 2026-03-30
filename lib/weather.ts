@@ -12,7 +12,7 @@ export function getWeatherUrl(
     latitude: lat.toString(),
     longitude: lon.toString(),
     current:
-      "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation",
+      "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m",
     hourly: "temperature_2m",
     daily: "temperature_2m_max,temperature_2m_min",
     forecast_days: "7",

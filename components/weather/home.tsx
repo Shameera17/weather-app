@@ -7,6 +7,7 @@ import Icon from "../ui/icon";
 import { SearchBar } from "../ui/search-bar";
 import Typography from "../ui/typography";
 import { MetricSelection } from "./metric-selection";
+import Today from "./today";
 export interface Metric {
   type: "metric" | "imperial"; // 'metric' for Celsius, 'imperial' for Fahrenheit
   windSpeedUnit: "km/h" | "mph"; // 'km/h' for kilometers per hour, 'mph' for miles per hour
@@ -53,6 +54,39 @@ export const HomePage = () => {
         <SearchBar />
       </section>
       {/* Section 4 : Weather Cards */}
+      <section>
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,800px)_minmax(0,384px)] gap-8">
+          {/* First Column */}
+          <div>
+            <Today
+              temperature={
+                `${weather?.current?.temperature_2m}${weather?.current_units?.temperature_2m}` ||
+                "0"
+              }
+              feelsLike={
+                `${weather?.current?.apparent_temperature}${weather?.current_units?.apparent_temperature}` ||
+                "0"
+              }
+              humidity={
+                `${weather?.current?.relative_humidity_2m}${weather?.current_units?.relative_humidity_2m}` ||
+                "0"
+              }
+              windSpeed={
+                `${weather?.current?.wind_speed_10m}${weather?.current_units?.wind_speed_10m}` ||
+                "0"
+              }
+              precipitation={
+                `${weather?.current?.precipitation}${weather?.current_units?.precipitation}` ||
+                "0"
+              }
+              city={"Berlin, Germany"}
+              date={"Tuesday, Aug 5, 2025"}
+            />
+          </div>
+          {/* Second Column */}
+          <div></div>
+        </div>
+      </section>
       {/* Section 4.1 : Left */}
       {/* Section 4.2 : Right */}
     </>

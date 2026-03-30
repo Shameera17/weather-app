@@ -21,6 +21,11 @@ jest.mock("@/components/ui/search-bar", () => ({
   SearchBar: () => <div data-testid="search-bar">Search Bar</div>,
 }));
 
+jest.mock("../today", () => ({
+  __esModule: true,
+  default: () => <div data-testid="today">Today Component</div>,
+}));
+
 jest.mock("@/components/ui/icon", () => ({
   __esModule: true,
   default: ({ src, size }: any) => <div data-testid="icon">{src}</div>,
@@ -36,6 +41,10 @@ jest.mock("@/components/ui/typography", () => ({
 jest.mock("@/lib/assets", () => ({
   images: {
     logo: "/logo.svg",
+    bgTodayLarge: "/bg-today-large.svg",
+  },
+  weatherIcons: {
+    sunny: "/icons/icon-sunny.webp",
   },
 }));
 

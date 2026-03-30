@@ -21,6 +21,8 @@ export interface CurrentUnits {
   relative_humidity_2m: string;
   apparent_temperature: string;
   precipitation: string;
+
+  wind_speed_10m: string;
 }
 
 export interface CurrentWeather {
@@ -30,6 +32,7 @@ export interface CurrentWeather {
   relative_humidity_2m: number;
   apparent_temperature: number;
   precipitation: number;
+  wind_speed_10m: number;
 }
 
 export interface HourlyUnits {
