@@ -59,10 +59,7 @@ export const HomePage = () => {
           {/* First Column */}
           <div>
             <Today
-              temperature={
-                `${weather?.current?.temperature_2m}${weather?.current_units?.temperature_2m}` ||
-                "0"
-              }
+              temperature={`${weather?.current?.temperature_2m}°` || "0"}
               feelsLike={
                 `${weather?.current?.apparent_temperature}${weather?.current_units?.apparent_temperature}` ||
                 "0"
