@@ -21,9 +21,9 @@ const Forecast = ({ days }: ForecastProps) => {
         {days.map((day, index) => (
           <div
             key={index}
-            className="bg-neutral-800 border-neutral-600 border rounded-20 p-6 flex flex-col items-center justify-between gap-6 lg:min-w-40 lg:shrink-0 xl:min-w-0"
+            className="bg-neutral-800 border-neutral-600 border rounded-20 p-2.5 flex flex-col items-center justify-between gap-6  lg:min-w-40 lg:shrink-0 xl:min-w-0"
           >
-            <Typography variant="textPreset5" className="text-center">
+            <Typography variant="textPreset6" className="text-center">
               {day.day}
             </Typography>
             <Icon
@@ -32,8 +32,8 @@ const Forecast = ({ days }: ForecastProps) => {
               className="w-20 h-20"
             />
             <div className="flex gap-4 items-center justify-center">
-              <Typography variant="textPreset4">{day.highTemp}</Typography>
-              <Typography variant="textPreset5" className="opacity-60">
+              <Typography variant="textPreset7">{day.highTemp}</Typography>
+              <Typography variant="textPreset7" className="opacity-60">
                 {day.lowTemp}
               </Typography>
             </div>
