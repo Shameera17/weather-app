@@ -1,6 +1,7 @@
 import { images, weatherIcons } from "@/lib/assets";
 import Icon from "../ui/icon";
 import Typography from "../ui/typography";
+import Forecast from "./forecast";
 import SummaryCard from "./summary-card";
 
 interface TodayProps {
@@ -37,12 +38,59 @@ const Today = (props: TodayProps) => {
         </span>
       </div>
       {/* summary */}
-      <div className="flex flex-row flex-wrap gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <SummaryCard label="Feels Like" value={props.feelsLike} />
         <SummaryCard label="Humidity" value={props.humidity} />
         <SummaryCard label="Wind Speed" value={props.windSpeed} />
         <SummaryCard label="Precipitation" value={props.precipitation} />
       </div>
+      {/* forecast */}
+      <Forecast
+        days={[
+          {
+            day: "Tue",
+            icon: weatherIcons.sunny,
+            highTemp: "20°",
+            lowTemp: "14°",
+          },
+          {
+            day: "Wed",
+            icon: weatherIcons.sunny,
+            highTemp: "21°",
+            lowTemp: "15°",
+          },
+          {
+            day: "Thu",
+            icon: weatherIcons.sunny,
+            highTemp: "24°",
+            lowTemp: "14°",
+          },
+          {
+            day: "Fri",
+            icon: weatherIcons.sunny,
+            highTemp: "25°",
+            lowTemp: "13°",
+          },
+          {
+            day: "Sat",
+            icon: weatherIcons.sunny,
+            highTemp: "21°",
+            lowTemp: "15°",
+          },
+          {
+            day: "Sun",
+            icon: weatherIcons.sunny,
+            highTemp: "25°",
+            lowTemp: "16°",
+          },
+          {
+            day: "Mon",
+            icon: weatherIcons.sunny,
+            highTemp: "24°",
+            lowTemp: "15°",
+          },
+        ]}
+      />
     </div>
   );
 };
