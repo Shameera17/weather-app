@@ -1,5 +1,6 @@
 "use client";
 import { useGeolocation } from "@/hooks/useGeoLocation";
+import { useReverseGeocode } from "@/hooks/useReverseGeocode";
 import { useWeather } from "@/hooks/useWeather";
 import { images } from "@/lib/assets";
 import { useState } from "react";
@@ -28,8 +29,20 @@ export const HomePage = () => {
     coords?.longitude,
     unit.type,
   );
+  const { fullLocation, isLoading: isLoadingLocation } = useReverseGeocode(
+    coords?.latitude,
+    coords?.longitude,
+  );
 
-  if (loading || isLoading) {
+  // Get current date formatted
+  const currentDate = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  if (loading || isLoading || isLoadingLocation) {
     return <div>Loading...</div>;
   }
   if (error || isError) {
@@ -77,8 +90,8 @@ export const HomePage = () => {
                 `${weather?.current?.precipitation}${weather?.current_units?.precipitation}` ||
                 "0"
               }
-              city={"Berlin, Germany"}
-              date={"Tuesday, Aug 5, 2025"}
+              city={fullLocation || "Unknown Location"}
+              date={currentDate}
               daily={weather?.daily}
             />
           </div>
