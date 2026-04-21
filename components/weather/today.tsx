@@ -1,4 +1,5 @@
 import { images, weatherIcons } from "@/lib/assets";
+import { DailyWeather } from "@/types/weather";
 import Icon from "../ui/icon";
 import Typography from "../ui/typography";
 import Forecast from "./forecast";
@@ -12,8 +13,24 @@ interface TodayProps {
   precipitation: string;
   city: string;
   date: string;
+  daily: DailyWeather | undefined;
 }
 const Today = (props: TodayProps) => {
+  const forecastDays = props.daily
+    ? props.daily.time.map((date, index) => {
+        const dateObj = new Date(date);
+        const dayName = dateObj.toLocaleDateString("en-US", {
+          weekday: "short",
+        });
+        return {
+          day: dayName,
+          icon: weatherIcons.sunny,
+          highTemp: `${props.daily!.temperature_2m_max[index]}°`,
+          lowTemp: `${props.daily!.temperature_2m_min[index]}°`,
+        };
+      })
+    : [];
+
   return (
     <div className="w-full ">
       {/* hero */}
@@ -45,52 +62,7 @@ const Today = (props: TodayProps) => {
         <SummaryCard label="Precipitation" value={props.precipitation} />
       </div>
       {/* forecast */}
-      <Forecast
-        days={[
-          {
-            day: "Tue",
-            icon: weatherIcons.sunny,
-            highTemp: "20°",
-            lowTemp: "14°",
-          },
-          {
-            day: "Wed",
-            icon: weatherIcons.sunny,
-            highTemp: "21°",
-            lowTemp: "15°",
-          },
-          {
-            day: "Thu",
-            icon: weatherIcons.sunny,
-            highTemp: "24°",
-            lowTemp: "14°",
-          },
-          {
-            day: "Fri",
-            icon: weatherIcons.sunny,
-            highTemp: "25°",
-            lowTemp: "13°",
-          },
-          {
-            day: "Sat",
-            icon: weatherIcons.sunny,
-            highTemp: "21°",
-            lowTemp: "15°",
-          },
-          {
-            day: "Sun",
-            icon: weatherIcons.sunny,
-            highTemp: "25°",
-            lowTemp: "16°",
-          },
-          {
-            day: "Mon",
-            icon: weatherIcons.sunny,
-            highTemp: "24°",
-            lowTemp: "15°",
-          },
-        ]}
-      />
+      <Forecast days={forecastDays} />
     </div>
   );
 };

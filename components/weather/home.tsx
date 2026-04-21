@@ -78,6 +78,7 @@ export const HomePage = () => {
               }
               city={"Berlin, Germany"}
               date={"Tuesday, Aug 5, 2025"}
+              daily={weather?.daily}
             />
           </div>
           {/* Second Column */}
