@@ -25,9 +25,9 @@ export const HomePage = () => {
     temperatureUnit: "c",
   });
   const { weather, isLoading, isError } = useWeather(
+    unit,
     coords?.latitude,
     coords?.longitude,
-    unit.type,
   );
   const { fullLocation, isLoading: isLoadingLocation } = useReverseGeocode(
     coords?.latitude,
