@@ -6,6 +6,7 @@ import { useState } from "react";
 import Icon from "../ui/icon";
 import { SearchBar } from "../ui/search-bar";
 import Typography from "../ui/typography";
+import HourlyForecast from "./hourly-forecast";
 import { MetricSelection } from "./metric-selection";
 import Today from "./today";
 export interface Metric {
@@ -82,7 +83,9 @@ export const HomePage = () => {
             />
           </div>
           {/* Second Column */}
-          <div></div>
+          <div>
+            <HourlyForecast hourly={weather?.hourly} />
+          </div>
         </div>
       </section>
       {/* Section 4.1 : Left */}
