@@ -1,6 +1,7 @@
 import { images, weatherIcons } from "@/lib/assets";
 import Icon from "../ui/icon";
 import Typography from "../ui/typography";
+import SummaryCard from "./summary-card";
 
 interface TodayProps {
   temperature: string;
@@ -16,7 +17,7 @@ const Today = (props: TodayProps) => {
     <div className="w-full ">
       {/* hero */}
       <div
-        className="w-full rounded-20 flex flex-col md:flex-row items-center justify-between py-10 px-[24.5px]  md:px-6 md:py-20"
+        className="mb-8 w-full rounded-20 flex flex-col md:flex-row items-center justify-between py-10 px-6 md:px-8 md:py-20 overflow-visible"
         style={{
           background: `url(${images.bgTodayLarge}) no-repeat center center / cover`,
         }}
@@ -26,13 +27,22 @@ const Today = (props: TodayProps) => {
           <Typography variant="textPreset4">{props.city}</Typography>
           <Typography variant="textPreset6">{props.date}</Typography>
         </span>
-        <span className="flex items-center justify-center gap-4">
-          <Icon src={weatherIcons.sunny} size={120} />
+        <span className="flex items-center justify-center  overflow-visible pr-4">
+          <Icon
+            src={weatherIcons.sunny}
+            size={120}
+            className="w-[80px] h-[80px] md:w-30 md:h-30"
+          />
           <Typography variant="textPreset1">{props.temperature}</Typography>
         </span>
       </div>
       {/* summary */}
-      <div></div>
+      <div className="flex flex-row flex-wrap gap-4">
+        <SummaryCard label="Feels Like" value={props.feelsLike} />
+        <SummaryCard label="Humidity" value={props.humidity} />
+        <SummaryCard label="Wind Speed" value={props.windSpeed} />
+        <SummaryCard label="Precipitation" value={props.precipitation} />
+      </div>
     </div>
   );
 };
