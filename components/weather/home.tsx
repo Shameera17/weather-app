@@ -36,7 +36,7 @@ export const HomePage = () => {
     return <div>Error: {error || "Failed to fetch weather data"}</div>;
   }
   return (
-    <>
+    <div className="flex flex-col gap-8">
       {/* Section 1 : navigation */}
       <section>
         <nav className="flex justify-between w-full">
@@ -56,7 +56,7 @@ export const HomePage = () => {
       </section>
       {/* Section 4 : Weather Cards */}
       <section>
-        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,800px)_minmax(0,384px)] gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,384px)] gap-6">
           {/* First Column */}
           <div>
             <Today
@@ -88,8 +88,6 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
-      {/* Section 4.1 : Left */}
-      {/* Section 4.2 : Right */}
-    </>
+    </div>
   );
 };
