@@ -81,7 +81,7 @@ export const HomePage = () => {
     return <div>Error: {error || "Failed to fetch weather data"}</div>;
   }
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 mx-auto">
       {/* Section 1 : navigation */}
       <section>
         <nav className="flex justify-between w-full">

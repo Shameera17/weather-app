@@ -1,5 +1,7 @@
 import { images, weatherIcons } from "@/lib/assets";
 import { DailyWeather } from "@/types/weather";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import Icon from "../ui/icon";
 import Typography from "../ui/typography";
 import Forecast from "./forecast";
@@ -16,6 +18,36 @@ interface TodayProps {
   daily: DailyWeather | undefined;
 }
 const Today = (props: TodayProps) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+    }
+  };
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 300;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+      setTimeout(checkScroll, 300);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener("resize", checkScroll);
+    return () => window.removeEventListener("resize", checkScroll);
+  }, []);
+
   const forecastDays = props.daily
     ? props.daily.time.map((date, index) => {
         const dateObj = new Date(date);
@@ -55,11 +87,35 @@ const Today = (props: TodayProps) => {
         </span>
       </div>
       {/* summary */}
-      <div className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide">
-        <SummaryCard label="Feels Like" value={props.feelsLike} />
-        <SummaryCard label="Humidity" value={props.humidity} />
-        <SummaryCard label="Wind Speed" value={props.windSpeed} />
-        <SummaryCard label="Precipitation" value={props.precipitation} />
+      <div className="relative">
+        {canScrollLeft && (
+          <button
+            onClick={() => scroll("left")}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-neutral-700 hover:bg-neutral-600 rounded-full p-2 shadow-lg transition-colors"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="w-5 h-5 text-neutral-0" />
+          </button>
+        )}
+        {canScrollRight && (
+          <button
+            onClick={() => scroll("right")}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-neutral-700 hover:bg-neutral-600 rounded-full p-2 shadow-lg transition-colors"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="w-5 h-5 text-neutral-0" />
+          </button>
+        )}
+        <div
+          ref={scrollContainerRef}
+          onScroll={checkScroll}
+          className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide"
+        >
+          <SummaryCard label="Feels Like" value={props.feelsLike} />
+          <SummaryCard label="Humidity" value={props.humidity} />
+          <SummaryCard label="Wind Speed" value={props.windSpeed} />
+          <SummaryCard label="Precipitation" value={props.precipitation} />
+        </div>
       </div>
       {/* forecast */}
       <Forecast days={forecastDays} />

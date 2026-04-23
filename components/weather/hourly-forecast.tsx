@@ -67,7 +67,7 @@ const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
       </div>
 
       {/* Hourly Cards */}
-      <div className="flex flex-col gap-4 overflow-y-auto scrollbar-hide flex-1">
+      <div className="flex flex-col gap-4 overflow-y-auto flex-1 pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-neutral-400">
         {hourlyData.map((item, index) => (
           <div
             key={index}
