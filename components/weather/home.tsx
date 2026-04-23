@@ -4,7 +4,7 @@ import { useReverseGeocode } from "@/hooks/useReverseGeocode";
 import { useWeather } from "@/hooks/useWeather";
 import { images } from "@/lib/assets";
 import { LocationResult } from "@/types/weather";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Icon from "../ui/icon";
 import { SearchBar } from "../ui/search-bar";
 import Typography from "../ui/typography";
@@ -30,6 +30,10 @@ export const HomePage = () => {
     precipitationUnit: "mm",
     temperatureUnit: "c",
   });
+  const [secondColumnHeight, setSecondColumnHeight] = useState<number | null>(
+    null,
+  );
+  const firstColumnRef = useRef<HTMLDivElement>(null);
 
   // Use selected location or fallback to geolocation
   const latitude = selectedLocation?.latitude ?? coords?.latitude;
@@ -40,6 +44,19 @@ export const HomePage = () => {
     latitude,
     longitude,
   );
+
+  // Measure first column height
+  useEffect(() => {
+    const updateHeight = () => {
+      if (firstColumnRef.current) {
+        setSecondColumnHeight(firstColumnRef.current.offsetHeight);
+      }
+    };
+
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, [weather, isLoading]);
 
   // Get current date formatted
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -86,7 +103,12 @@ export const HomePage = () => {
       <section>
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,384px)] gap-6">
           {/* First Column */}
-          <div>
+          <div
+            ref={firstColumnRef}
+            style={{
+              height: "min-content",
+            }}
+          >
             <Today
               temperature={`${weather?.current?.temperature_2m}°` || "0"}
               feelsLike={
@@ -111,7 +133,14 @@ export const HomePage = () => {
             />
           </div>
           {/* Second Column */}
-          <div>
+          <div
+            className="overflow-y-auto scrollbar-hide"
+            style={{
+              height: secondColumnHeight
+                ? `${secondColumnHeight}px`
+                : undefined,
+            }}
+          >
             <HourlyForecast hourly={weather?.hourly} />
           </div>
         </div>

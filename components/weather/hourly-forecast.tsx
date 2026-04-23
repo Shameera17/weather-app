@@ -49,7 +49,7 @@ const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
   const hourlyData = groupedByDay[currentSelectedDay] || [];
 
   return (
-    <div className="w-full bg-neutral-800 border-neutral-600 border rounded-20 p-6">
+    <div className="w-full h-full bg-neutral-800 border-neutral-600 border rounded-20 p-6 flex flex-col ">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <Typography variant="textPreset5">Hourly forecast</Typography>
@@ -67,7 +67,7 @@ const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
       </div>
 
       {/* Hourly Cards */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 overflow-y-auto scrollbar-hide flex-1">
         {hourlyData.map((item, index) => (
           <div
             key={index}
