@@ -18,7 +18,7 @@ export interface Metric {
   temperatureUnit: "c" | "f"; // 'c' for Celsius, 'f' for Fahrenheit
 }
 export const HomePage = () => {
-  const { coords, loading, error } = useGeolocation();
+  const { coords, loading, error, requestLocation } = useGeolocation();
   const [selectedLocation, setSelectedLocation] = useState<{
     latitude: number;
     longitude: number;
@@ -35,9 +35,15 @@ export const HomePage = () => {
   );
   const firstColumnRef = useRef<HTMLDivElement>(null);
 
-  // Use selected location or fallback to geolocation
-  const latitude = selectedLocation?.latitude ?? coords?.latitude;
-  const longitude = selectedLocation?.longitude ?? coords?.longitude;
+  // Default to New York if no location selected
+  const DEFAULT_LAT = 40.7128;
+  const DEFAULT_LON = -74.006;
+
+  // Use selected location, geolocation, or default
+  const latitude =
+    selectedLocation?.latitude ?? coords?.latitude ?? DEFAULT_LAT;
+  const longitude =
+    selectedLocation?.longitude ?? coords?.longitude ?? DEFAULT_LON;
 
   const { weather, isLoading, isError } = useWeather(unit, latitude, longitude);
   const { fullLocation, isLoading: isLoadingLocation } = useReverseGeocode(
@@ -74,11 +80,11 @@ export const HomePage = () => {
     });
   };
 
-  if (loading || isLoading || isLoadingLocation) {
+  if (isLoading || isLoadingLocation) {
     return <div>Loading...</div>;
   }
-  if (error || isError) {
-    return <div>Error: {error || "Failed to fetch weather data"}</div>;
+  if (isError) {
+    return <div>Error: Failed to fetch weather data</div>;
   }
   return (
     <div className="flex flex-col gap-8 mx-auto">
