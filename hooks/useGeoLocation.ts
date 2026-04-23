@@ -13,27 +13,32 @@ export function useGeolocation() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!navigator.geolocation) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setError("Geolocation not supported");
-      setLoading(false);
-      return;
-    }
+    // Delay geolocation request to show initial UI first (better for thumbnails/SEO)
+    const timer = setTimeout(() => {
+      if (!navigator.geolocation) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setError("Geolocation not supported");
+        setLoading(false);
+        return;
+      }
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setCoords({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-        setLoading(false);
-      },
-      () => {
-        setError("Permission denied");
-        // TODO:UI Fallback when user denies geolocation permission
-        setLoading(false);
-      },
-    );
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCoords({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          setLoading(false);
+        },
+        () => {
+          setError("Permission denied");
+          // TODO:UI Fallback when user denies geolocation permission
+          setLoading(false);
+        },
+      );
+    }, 500); // 500ms delay to show initial UI
+
+    return () => clearTimeout(timer);
   }, []);
 
   return { coords, loading, error };
