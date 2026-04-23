@@ -52,11 +52,11 @@ const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
     <div className="w-full bg-neutral-800 border-neutral-600 border rounded-20 p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <Typography variant="textPreset4">Hourly forecast</Typography>
+        <Typography variant="textPreset5">Hourly forecast</Typography>
         <select
           value={currentSelectedDay}
           onChange={(e) => setSelectedDay(e.target.value)}
-          className="bg-neutral-700 border-neutral-600 border rounded-12 px-4 py-2 text-neutral-0 text-body cursor-pointer focus:outline-none focus:ring-2 focus:ring-neutral-500"
+          className="bg-neutral-700 border-neutral-600 border rounded-12 px-5 py-2 text-neutral-0 text-body cursor-pointer focus:outline-none focus:ring-2 focus:ring-neutral-500"
         >
           {days.map((day) => (
             <option key={day} value={day}>
@@ -71,13 +71,13 @@ const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
         {hourlyData.map((item, index) => (
           <div
             key={index}
-            className="bg-neutral-700 border-neutral-600 border rounded-12 px-6 py-4 flex items-center justify-between"
+            className="bg-neutral-700 border-neutral-600 border rounded-12 px-5 py-4 flex items-center justify-between"
           >
             <div className="flex items-center gap-4">
-              <Icon src={weatherIcons.sunny} size={48} className="w-12 h-12" />
-              <Typography variant="textPreset4">{item.hour}</Typography>
+              <Icon src={weatherIcons.sunny} size={40} className="w-10 h-10" />
+              <Typography variant="textPreset5">{item.hour}</Typography>
             </div>
-            <Typography variant="textPreset4">
+            <Typography variant="textPreset7">
               {Math.round(item.temperature)}°
             </Typography>
           </div>
