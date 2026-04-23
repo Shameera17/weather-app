@@ -49,8 +49,8 @@ export interface CurrentUnits {
   relative_humidity_2m: string;
   apparent_temperature: string;
   precipitation: string;
-
   wind_speed_10m: string;
+  weather_code: string;
 }
 
 export interface CurrentWeather {
@@ -61,26 +61,31 @@ export interface CurrentWeather {
   apparent_temperature: number;
   precipitation: number;
   wind_speed_10m: number;
+  weather_code: number;
 }
 
 export interface HourlyUnits {
   time: string;
   temperature_2m: string;
+  weather_code: string;
 }
 
 export interface HourlyWeather {
   time: string[];
   temperature_2m: number[];
+  weather_code: number[];
 }
 
 export interface DailyUnits {
   time: string;
   temperature_2m_max: string;
   temperature_2m_min: string;
+  weather_code: string;
 }
 
 export interface DailyWeather {
   time: string[];
   temperature_2m_max: number[];
   temperature_2m_min: number[];
+  weather_code: number[];
 }

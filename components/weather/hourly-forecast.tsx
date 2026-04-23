@@ -1,5 +1,5 @@
 "use client";
-import { weatherIcons } from "@/lib/assets";
+import { getWeatherIconFromCode } from "@/lib/assets";
 import { HourlyWeather } from "@/types/weather";
 import { useState } from "react";
 import Icon from "../ui/icon";
@@ -31,6 +31,7 @@ const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
       acc[dayKey].push({
         time,
         temperature: hourly.temperature_2m[index],
+        weatherCode: hourly.weather_code[index],
         hour: date.toLocaleTimeString("en-US", {
           hour: "numeric",
           hour12: true,
@@ -40,7 +41,12 @@ const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
     },
     {} as Record<
       string,
-      Array<{ time: string; temperature: number; hour: string }>
+      Array<{
+        time: string;
+        temperature: number;
+        weatherCode: number;
+        hour: string;
+      }>
     >,
   );
 
@@ -74,7 +80,11 @@ const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
             className="bg-neutral-700 border-neutral-600 border rounded-12 px-5 py-4 flex items-center justify-between"
           >
             <div className="flex items-center gap-4">
-              <Icon src={weatherIcons.sunny} size={40} className="w-10 h-10" />
+              <Icon
+                src={getWeatherIconFromCode(item.weatherCode)}
+                size={40}
+                className="w-10 h-10"
+              />
               <Typography variant="textPreset5">{item.hour}</Typography>
             </div>
             <Typography variant="textPreset7">{item.temperature}°</Typography>

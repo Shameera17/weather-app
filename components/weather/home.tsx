@@ -130,6 +130,7 @@ export const HomePage = () => {
               city={fullLocation || "Unknown Location"}
               date={currentDate}
               daily={weather?.daily}
+              currentWeatherCode={weather?.current?.weather_code}
             />
           </div>
           {/* Second Column */}

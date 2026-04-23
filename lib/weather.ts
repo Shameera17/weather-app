@@ -11,9 +11,9 @@ export function getWeatherUrl(lat: number, lon: number, unit: Metric) {
     latitude: lat.toString(),
     longitude: lon.toString(),
     current:
-      "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m",
-    hourly: "temperature_2m",
-    daily: "temperature_2m_max,temperature_2m_min",
+      "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m,weather_code",
+    hourly: "temperature_2m,weather_code",
+    daily: "temperature_2m_max,temperature_2m_min,weather_code",
     forecast_days: "7",
     temperature_unit,
     windspeed_unit,

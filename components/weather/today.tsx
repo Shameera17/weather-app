@@ -1,4 +1,4 @@
-import { images, weatherIcons } from "@/lib/assets";
+import { getWeatherIconFromCode, images, weatherIcons } from "@/lib/assets";
 import { DailyWeather } from "@/types/weather";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -16,6 +16,7 @@ interface TodayProps {
   city: string;
   date: string;
   daily: DailyWeather | undefined;
+  currentWeatherCode?: number;
 }
 const Today = (props: TodayProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -54,14 +55,19 @@ const Today = (props: TodayProps) => {
         const dayName = dateObj.toLocaleDateString("en-US", {
           weekday: "short",
         });
+        const weatherCode = props.daily!.weather_code[index];
         return {
           day: dayName,
-          icon: weatherIcons.sunny,
+          icon: getWeatherIconFromCode(weatherCode),
           highTemp: `${props.daily!.temperature_2m_max[index]}°`,
           lowTemp: `${props.daily!.temperature_2m_min[index]}°`,
         };
       })
     : [];
+
+  const currentWeatherIcon = props.currentWeatherCode
+    ? getWeatherIconFromCode(props.currentWeatherCode)
+    : weatherIcons.sunny;
 
   return (
     <div className="w-full ">
@@ -79,7 +85,7 @@ const Today = (props: TodayProps) => {
         </span>
         <span className="flex items-center justify-center  overflow-visible pr-4">
           <Icon
-            src={weatherIcons.sunny}
+            src={currentWeatherIcon}
             size={120}
             className="w-[80px] h-[80px] md:w-30 md:h-30"
           />
