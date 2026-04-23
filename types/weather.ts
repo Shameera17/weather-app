@@ -1,3 +1,31 @@
+export interface LocationResult {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  elevation?: number;
+  feature_code?: string;
+  country_code?: string;
+  country?: string;
+  country_id?: number;
+  timezone?: string;
+  population?: number;
+  postcodes?: string[];
+  admin1?: string;
+  admin2?: string;
+  admin3?: string;
+  admin4?: string;
+  admin1_id?: number;
+  admin2_id?: number;
+  admin3_id?: number;
+  admin4_id?: number;
+}
+
+export interface LocationResponse {
+  results?: LocationResult[];
+  generationtime_ms: number;
+}
+
 export interface WeatherResponse {
   latitude: number;
   longitude: number;

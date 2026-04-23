@@ -3,6 +3,7 @@ import { useGeolocation } from "@/hooks/useGeoLocation";
 import { useReverseGeocode } from "@/hooks/useReverseGeocode";
 import { useWeather } from "@/hooks/useWeather";
 import { images } from "@/lib/assets";
+import { LocationResult } from "@/types/weather";
 import { useState } from "react";
 import Icon from "../ui/icon";
 import { SearchBar } from "../ui/search-bar";
@@ -18,20 +19,26 @@ export interface Metric {
 }
 export const HomePage = () => {
   const { coords, loading, error } = useGeolocation();
+  const [selectedLocation, setSelectedLocation] = useState<{
+    latitude: number;
+    longitude: number;
+    name: string;
+  } | null>(null);
   const [unit, setUnit] = useState<Metric>({
     type: "metric",
     windSpeedUnit: "km/h",
     precipitationUnit: "mm",
     temperatureUnit: "c",
   });
-  const { weather, isLoading, isError } = useWeather(
-    unit,
-    coords?.latitude,
-    coords?.longitude,
-  );
+
+  // Use selected location or fallback to geolocation
+  const latitude = selectedLocation?.latitude ?? coords?.latitude;
+  const longitude = selectedLocation?.longitude ?? coords?.longitude;
+
+  const { weather, isLoading, isError } = useWeather(unit, latitude, longitude);
   const { fullLocation, isLoading: isLoadingLocation } = useReverseGeocode(
-    coords?.latitude,
-    coords?.longitude,
+    latitude,
+    longitude,
   );
 
   // Get current date formatted
@@ -41,6 +48,14 @@ export const HomePage = () => {
     day: "numeric",
     year: "numeric",
   });
+
+  const handleLocationSelect = (location: LocationResult) => {
+    setSelectedLocation({
+      latitude: location.latitude,
+      longitude: location.longitude,
+      name: `${location.name}${location.admin1 ? `, ${location.admin1}` : ""}${location.country ? `, ${location.country}` : ""}`,
+    });
+  };
 
   if (loading || isLoading || isLoadingLocation) {
     return <div>Loading...</div>;
@@ -65,7 +80,7 @@ export const HomePage = () => {
       </section>
       {/* Section 3 : Search */}
       <section>
-        <SearchBar />
+        <SearchBar onSelectLocation={handleLocationSelect} />
       </section>
       {/* Section 4 : Weather Cards */}
       <section>
