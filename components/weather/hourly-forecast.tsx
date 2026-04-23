@@ -77,9 +77,7 @@ const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
               <Icon src={weatherIcons.sunny} size={40} className="w-10 h-10" />
               <Typography variant="textPreset5">{item.hour}</Typography>
             </div>
-            <Typography variant="textPreset7">
-              {Math.round(item.temperature)}°
-            </Typography>
+            <Typography variant="textPreset7">{item.temperature}°</Typography>
           </div>
         ))}
       </div>

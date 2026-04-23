@@ -15,9 +15,10 @@ interface ForecastProps {
 
 const Forecast = ({ days }: ForecastProps) => {
   return (
-    <div className="w-full mt-8">
+    <div className="w-full mt-12">
+      <Typography variant="textPreset5">Daily forecast</Typography>
       {/* Mobile: Grid 1-3 cols, Tablet: Grid 3 cols, Desktop: Horizontal scroll or all 7 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:flex lg:overflow-x-auto xl:grid xl:grid-cols-7 gap-4 md:gap-6 scrollbar-hide">
+      <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:flex lg:overflow-x-auto xl:grid xl:grid-cols-7 gap-4 md:gap-6 scrollbar-hide">
         {days.map((day, index) => (
           <div
             key={index}
