@@ -10,9 +10,13 @@ jest.mock("@/hooks/useWeather", () => ({
   useWeather: jest.fn(),
 }));
 
+jest.mock("@/hooks/useReverseGeocode", () => ({
+  useReverseGeocode: jest.fn(),
+}));
+
 // Mock child components
 jest.mock("../metric-selection", () => ({
-  MetricSelection: ({ unit, setUnit }: any) => (
+  MetricSelection: ({ unit }: any) => (
     <div data-testid="metric-selection">Metric Selection - {unit.type}</div>
   ),
 }));
@@ -26,9 +30,14 @@ jest.mock("../today", () => ({
   default: () => <div data-testid="today">Today Component</div>,
 }));
 
+jest.mock("../hourly-forecast", () => ({
+  __esModule: true,
+  default: () => <div data-testid="hourly-forecast">Hourly Forecast</div>,
+}));
+
 jest.mock("@/components/ui/icon", () => ({
   __esModule: true,
-  default: ({ src, size }: any) => <div data-testid="icon">{src}</div>,
+  default: ({ src }: any) => <div data-testid="icon">{src}</div>,
 }));
 
 jest.mock("@/components/ui/typography", () => ({
@@ -49,12 +58,16 @@ jest.mock("@/lib/assets", () => ({
 }));
 
 import { useGeolocation } from "@/hooks/useGeoLocation";
+import { useReverseGeocode } from "@/hooks/useReverseGeocode";
 import { useWeather } from "@/hooks/useWeather";
 
 const mockUseGeolocation = useGeolocation as jest.MockedFunction<
   typeof useGeolocation
 >;
 const mockUseWeather = useWeather as jest.MockedFunction<typeof useWeather>;
+const mockUseReverseGeocode = useReverseGeocode as jest.MockedFunction<
+  typeof useReverseGeocode
+>;
 
 describe("HomePage", () => {
   beforeEach(() => {
@@ -72,6 +85,13 @@ describe("HomePage", () => {
       isLoading: false,
       isError: null,
     });
+    mockUseReverseGeocode.mockReturnValue({
+      city: null,
+      country: undefined,
+      fullLocation: null,
+      isLoading: false,
+      error: null,
+    });
 
     render(<HomePage />);
     expect(screen.getByText("Loading...")).toBeInTheDocument();
@@ -87,6 +107,36 @@ describe("HomePage", () => {
       weather: undefined,
       isLoading: true,
       isError: null,
+    });
+    mockUseReverseGeocode.mockReturnValue({
+      city: null,
+      country: undefined,
+      fullLocation: null,
+      isLoading: false,
+      error: null,
+    });
+
+    render(<HomePage />);
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
+  });
+
+  it("shows loading state when reverse geocode is loading", () => {
+    mockUseGeolocation.mockReturnValue({
+      coords: { latitude: 51.5074, longitude: -0.1278 },
+      loading: false,
+      error: null,
+    });
+    mockUseWeather.mockReturnValue({
+      weather: {} as any,
+      isLoading: false,
+      isError: null,
+    });
+    mockUseReverseGeocode.mockReturnValue({
+      city: null,
+      country: undefined,
+      fullLocation: null,
+      isLoading: true,
+      error: null,
     });
 
     render(<HomePage />);
@@ -104,6 +154,13 @@ describe("HomePage", () => {
       isLoading: false,
       isError: null,
     });
+    mockUseReverseGeocode.mockReturnValue({
+      city: null,
+      country: undefined,
+      fullLocation: null,
+      isLoading: false,
+      error: null,
+    });
 
     render(<HomePage />);
     expect(screen.getByText("Error: Permission denied")).toBeInTheDocument();
@@ -119,6 +176,13 @@ describe("HomePage", () => {
       weather: undefined,
       isLoading: false,
       isError: new Error("Failed to fetch"),
+    });
+    mockUseReverseGeocode.mockReturnValue({
+      city: null,
+      country: undefined,
+      fullLocation: null,
+      isLoading: false,
+      error: null,
     });
 
     render(<HomePage />);
@@ -140,6 +204,13 @@ describe("HomePage", () => {
       } as any,
       isLoading: false,
       isError: null,
+    });
+    mockUseReverseGeocode.mockReturnValue({
+      city: "London",
+      country: "UK",
+      fullLocation: "London, UK",
+      isLoading: false,
+      error: null,
     });
 
     render(<HomePage />);
@@ -172,13 +243,25 @@ describe("HomePage", () => {
       isLoading: false,
       isError: null,
     });
+    mockUseReverseGeocode.mockReturnValue({
+      city: "New York",
+      country: "USA",
+      fullLocation: "New York, USA",
+      isLoading: false,
+      error: null,
+    });
 
     render(<HomePage />);
 
     expect(mockUseWeather).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: "metric",
+        windSpeedUnit: "km/h",
+        precipitationUnit: "mm",
+        temperatureUnit: "c",
+      }),
       coords.latitude,
       coords.longitude,
-      "metric",
     );
   });
 
@@ -192,6 +275,13 @@ describe("HomePage", () => {
       weather: {} as any,
       isLoading: false,
       isError: null,
+    });
+    mockUseReverseGeocode.mockReturnValue({
+      city: "London",
+      country: "UK",
+      fullLocation: "London, UK",
+      isLoading: false,
+      error: null,
     });
 
     render(<HomePage />);
