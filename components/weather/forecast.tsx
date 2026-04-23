@@ -48,7 +48,9 @@ const Forecast = ({ days }: ForecastProps) => {
 
   return (
     <div className="w-full mt-12">
-      <Typography variant="textPreset5">Daily forecast</Typography>
+      {days.length > 0 && (
+        <Typography variant="textPreset5">Daily forecast</Typography>
+      )}
       {/* Mobile: Grid 1-3 cols, Tablet: Grid 3 cols, Desktop: Horizontal scroll or all 7 */}
       <div className="relative mt-5">
         {canScrollLeft && (

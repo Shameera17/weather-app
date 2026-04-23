@@ -84,11 +84,13 @@ const Today = (props: TodayProps) => {
           <Typography variant="textPreset6">{props.date}</Typography>
         </span>
         <span className="flex items-center justify-center  overflow-visible pr-4">
-          <Icon
-            src={currentWeatherIcon}
-            size={120}
-            className="w-[80px] h-[80px] md:w-30 md:h-30"
-          />
+          {props.temperature && (
+            <Icon
+              src={currentWeatherIcon}
+              size={120}
+              className="w-[80px] h-[80px] md:w-30 md:h-30"
+            />
+          )}
           <Typography variant="textPreset1">{props.temperature}</Typography>
         </span>
       </div>

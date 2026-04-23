@@ -1,6 +1,6 @@
 "use client";
 // This hook is responsible for getting the user's geolocation coordinates (latitude and longitude) using the browser's Geolocation API. It manages the state of the coordinates, loading status, and any potential errors that may occur during the geolocation retrieval process.
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Coordinates = {
   latitude: number;
@@ -35,6 +35,11 @@ export function useGeolocation() {
       },
     );
   };
+
+  // Auto-request location on mount (after initial render to avoid SSR/thumbnail issues)
+  useEffect(() => {
+    requestLocation();
+  }, []);
 
   return { coords, loading, error, requestLocation };
 }

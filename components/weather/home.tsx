@@ -35,15 +35,9 @@ export const HomePage = () => {
   );
   const firstColumnRef = useRef<HTMLDivElement>(null);
 
-  // Default to New York if no location selected
-  const DEFAULT_LAT = 40.7128;
-  const DEFAULT_LON = -74.006;
-
-  // Use selected location, geolocation, or default
-  const latitude =
-    selectedLocation?.latitude ?? coords?.latitude ?? DEFAULT_LAT;
-  const longitude =
-    selectedLocation?.longitude ?? coords?.longitude ?? DEFAULT_LON;
+  // Use selected location or geolocation (no default)
+  const latitude = selectedLocation?.latitude ?? coords?.latitude;
+  const longitude = selectedLocation?.longitude ?? coords?.longitude;
 
   const { weather, isLoading, isError } = useWeather(unit, latitude, longitude);
   const { fullLocation, isLoading: isLoadingLocation } = useReverseGeocode(
@@ -80,7 +74,8 @@ export const HomePage = () => {
     });
   };
 
-  if (isLoading || isLoadingLocation) {
+  // Show loading only when we're actually loading weather data with coordinates
+  if ((latitude && longitude && isLoading) || isLoadingLocation) {
     return <div>Loading...</div>;
   }
   if (isError) {
@@ -107,7 +102,9 @@ export const HomePage = () => {
       </section>
       {/* Section 4 : Weather Cards */}
       <section>
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,384px)] gap-6">
+        <div
+          className={`grid grid-cols-1 ${!weather?.current ? "grid-cols-1" : "lg:grid-cols-[minmax(0,1fr)_minmax(0,384px)]"}  gap-6`}
+        >
           {/* First Column */}
           <div
             ref={firstColumnRef}
@@ -116,24 +113,32 @@ export const HomePage = () => {
             }}
           >
             <Today
-              temperature={`${weather?.current?.temperature_2m}°` || "0"}
+              temperature={
+                weather?.current?.temperature_2m
+                  ? `${weather.current.temperature_2m}°`
+                  : ""
+              }
               feelsLike={
-                `${weather?.current?.apparent_temperature}${weather?.current_units?.apparent_temperature}` ||
-                "0"
+                weather?.current?.apparent_temperature
+                  ? `${weather.current.apparent_temperature}${weather.current_units?.apparent_temperature}`
+                  : "--"
               }
               humidity={
-                `${weather?.current?.relative_humidity_2m}${weather?.current_units?.relative_humidity_2m}` ||
-                "0"
+                weather?.current?.relative_humidity_2m
+                  ? `${weather.current.relative_humidity_2m}${weather.current_units?.relative_humidity_2m}`
+                  : "--"
               }
               windSpeed={
-                `${weather?.current?.wind_speed_10m}${weather?.current_units?.wind_speed_10m}` ||
-                "0"
+                weather?.current?.wind_speed_10m
+                  ? `${weather.current.wind_speed_10m}${weather.current_units?.wind_speed_10m}`
+                  : "--"
               }
               precipitation={
-                `${weather?.current?.precipitation}${weather?.current_units?.precipitation}` ||
-                "0"
+                weather?.current?.precipitation
+                  ? `${weather.current.precipitation}${weather.current_units?.precipitation}`
+                  : "--"
               }
-              city={fullLocation || "Unknown Location"}
+              city={fullLocation || "Awaiting location..."}
               date={currentDate}
               daily={weather?.daily}
               currentWeatherCode={weather?.current?.weather_code}
