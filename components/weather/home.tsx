@@ -76,7 +76,17 @@ export const HomePage = () => {
 
   // Show loading only when we're actually loading weather data with coordinates
   if ((latitude && longitude && isLoading) || isLoadingLocation) {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full flex flex-col items-center justify-center min-h-screen gap-4">
+        <div className="relative">
+          <div className="w-16 h-16 border-4 border-blue-200 dark:border-blue-900 rounded-full"></div>
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
+        </div>
+        <p className="text-gray-600 dark:text-gray-400 animate-pulse">
+          Loading weather data...
+        </p>
+      </div>
+    );
   }
   if (isError) {
     return <div>Error: Failed to fetch weather data</div>;
